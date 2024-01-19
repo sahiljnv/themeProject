@@ -1,11 +1,13 @@
 import {StyleSheet} from 'react-native';
 
-export const myStyle = StyleSheet.create({
+export const style = StyleSheet.create({
   mainContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  indicatorStyle: {
-    backgroundColor: 'rgba(200,200,200,.5)',
+  buttonStyle: {
+    height: 50,
+    width: 200,
   },
 });
