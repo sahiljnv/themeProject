@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">themeProject</string>
+    <string name="facebook_app_id">6986365554733520</string>
+    <string name="facebook_client_token">d4b0e53cb4d25a89cc0ab803d287a433</string>
+    <string name="fb_login_protocol_scheme">fb6986365554733520</string>
+
+
 </resources>
