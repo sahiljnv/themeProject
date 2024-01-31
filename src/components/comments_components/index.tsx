@@ -7,51 +7,72 @@ import AddIcon from 'react-native-vector-icons/Ionicons';
 
 const CommentsComponent = () => {
   const [comment, setComment] = React.useState<string>('');
-  const [data, setData] = React.useState<CommentProps[]>([]);
+  const [data, setData] = React.useState<CommentProps[]>(Comments);
   const [replyComment, setReplyComment] = React.useState<boolean>(false);
   const [id, setId] = React.useState<number>(0);
-  React.useState(() => {
-    setData(Comments);
-  }, []);
+
   const ref = React.useRef<TextInput>(null);
-  const addReply = React.useCallback((id: number) => {
+  const refList = React.useRef<FlatList>(null);
+
+  const addReply = React.useCallback((index: number) => {
     ref.current?.focus();
-    setId(id);
+    refList.current?.scrollToIndex({
+      index: index - 1,
+      animated: true,
+    });
+    setId(index);
     setReplyComment(true);
-    console.log('id: :::::::::::::::::::::::: ', id);
+    console.log('id: :::::::::::::::::::::::: ', index);
   }, []);
   const addComment = (id?: number) => {
     ref.current?.clear();
     ref.current?.blur();
     if (id) {
-      console.log('id  h yhaa');
-      setData(prevData => {
-        return prevData.map(element => {
-          if (element.id === id) {
-            console.log('element :::::::::::::;;> ', element);
+      console.log('id  h yhaa', data[id]);
+      const newReplyComment = {
+        comment: comment,
+        id: 12 + Math.random() * 12,
+        image: require('../../assets/sahilImage.jpeg'),
+        likeCount: 0,
+        timeLine: '12h',
+        userName: 'Sahil Rawat',
+        isVerified: false,
+      };
 
-            return {
-              ...element,
-              id: element.id + Math.random() * 11,
-              reply: [
-                ...element.reply,
-                {
-                  comment: comment,
-                  id: 12 + Math.random() * 12,
-                  image: require('../../assets/sahilImage.jpeg'),
-                  likeCount: 0,
-                  timeLine: '12h',
-                  userName: 'Sahil Rawat',
-                  isVerified: false,
-                },
-              ],
-            };
-          } else {
-            return element;
-          }
-        });
-      });
+      let onCommented = data[id - 1];
+      onCommented.reply?.push(newReplyComment);
+      data[id - 1] = onCommented;
+      setData(data);
+      // setData(prevData => {
+      //   return prevData.map(element => {
+      //     if (element.id === id) {
+      //       console.log('element :::::::::::::;;> ', element);
+
+      //       return {
+      //         ...element,
+      //         reply: [
+      //           ...element.reply,
+      //           {
+      //             comment: comment,
+      //             id: 12 + Math.random() * 12,
+      //             image: require('../../assets/sahilImage.jpeg'),
+      //             likeCount: 0,
+      //             timeLine: '12h',
+      //             userName: 'Sahil Rawat',
+      //             isVerified: false,
+      //           },
+      //         ],
+      //       };
+      //     } else {
+      //       return element;
+      //     }
+      //   });
+      // });
     } else {
+      refList.current?.scrollToIndex({
+        index: data.length - 1,
+        animated: true,
+      });
       setData(pre => {
         return [
           ...pre,
@@ -69,6 +90,7 @@ const CommentsComponent = () => {
       });
     }
     setReplyComment(false);
+    setId(0);
   };
   return (
     <View style={style.mainContainer}>
@@ -77,11 +99,13 @@ const CommentsComponent = () => {
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
+        ref={refList}
+        initialScrollIndex={id}
         style={style.listStyle}
         data={data}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <CommentContainer {...item} addReply={addReply} />
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item, index}) => (
+          <CommentContainer {...item} addReply={addReply} index={index + 1} />
         )}
       />
       <View style={style.inputContainer}>
