@@ -1,9 +1,9 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {style} from '../style';
-import {CommentProps} from '../../../assets/comment_data';
 import HeartIcon from 'react-native-vector-icons/FontAwesome';
-type NestedCommentProps = CommentProps & {
+import {Reply} from '../../../data_model/comment_list_model';
+type NestedCommentProps = Reply & {
   nestedReplyHandler: () => void;
 };
 const NestedComment = (item: NestedCommentProps) => {
@@ -12,17 +12,16 @@ const NestedComment = (item: NestedCommentProps) => {
   return (
     <View style={style.mainContainer}>
       <View style={style.imgComponent}>
-        <Image source={item.image} style={style.img} />
+        <Image source={{uri: item.replyingUsers[0].image}} style={style.img} />
       </View>
       <View style={style.commentContainer}>
         <Text style={style.comment}>
-          <Text style={style.userName}>{item.userName}</Text> {item.comment}
+          <Text style={style.userName}>{item.replyingUsers[0].firstName}</Text>
+          {item.text}
         </Text>
         <View style={style.likeAndTimeContainer}>
-          <Text style={style.text}>{item.timeLine}</Text>
-          <Text style={style.text}>
-            {isReplyLike ? item.likeCount + 1 : item.likeCount} likes
-          </Text>
+          <Text style={style.text}>{item.createdAt}</Text>
+          <Text style={style.text}>{item.total_likes} likes</Text>
           <Text style={style.text} onPress={() => item.nestedReplyHandler()}>
             Reply
           </Text>

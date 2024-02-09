@@ -51,19 +51,17 @@ const GoogleLogIn = (props: Props) => {
 //   offlineAccess: true,
 // });
 
-// export type User = {
-//   email: string;
-//   familyName: string | null;
-//   givenName: string | null;
-//   id: string;
-//   name: string | null;
-//   photo: string | null;
-// };
+export type User = {
+  email: string;
+  familyName: string | null;
+  givenName: string | null;
+  id: string;
+  name: string | null;
+  photo: string | null;
+};
 
-{
-  /* <GoogleSigninButton style={style.buttonStyle} onPress={signIn} />
+/* <GoogleSigninButton style={style.buttonStyle} onPress={signIn} />
           <Button onPress={fbLogin} title={'Facebook'} /> */
-}
 
 // const signIn = async () => {
 //   try {
