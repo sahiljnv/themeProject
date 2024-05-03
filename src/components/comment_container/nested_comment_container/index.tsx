@@ -21,7 +21,13 @@ const NestedComment = (item: NestedCommentProps) => {
         </Text>
         <View style={style.likeAndTimeContainer}>
           <Text style={style.text}>{item.createdAt}</Text>
-          <Text style={style.text}>{item.total_likes} likes</Text>
+          {item.total_likes > 0 ? (
+            <Text style={style.text}>
+              {item.total_likes} {item.total_likes === 1 ? 'like' : 'likes'}
+            </Text>
+          ) : (
+            <></>
+          )}
           <Text style={style.text} onPress={() => item.nestedReplyHandler()}>
             Reply
           </Text>

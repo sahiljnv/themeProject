@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 export const style = StyleSheet.create({
   mainContainer: {
     backgroundColor: 'white',
-    width: '100%',
-    height: '100%',
+    justifyContent: 'center',
+    flex: 1,
   },
   header: {
     fontSize: 25,

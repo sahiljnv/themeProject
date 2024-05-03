@@ -25,6 +25,12 @@ const CommentContainer = (DataItem: CommentContainerProps) => {
       setLike(false);
     }
   }, [DataItem]);
+  // const totalLikeHanlder = (likes: number) => {
+  //   if (likes === 1) {
+  //     return 'like';
+  //   }
+  //   return 'likes';
+  // };
   return (
     <View style={style.mainContainer}>
       <View style={style.imgComponent}>
@@ -42,7 +48,14 @@ const CommentContainer = (DataItem: CommentContainerProps) => {
         </Text>
         <View style={style.likeAndTimeContainer}>
           <Text style={style.text}>{DataItem.createdAt}</Text>
-          <Text style={style.text}>{DataItem.total_likes} likes</Text>
+          {DataItem.total_likes > 0 ? (
+            <Text style={style.text}>
+              {DataItem.total_likes}{' '}
+              {DataItem.total_likes === 1 ? 'like' : 'likes'}
+            </Text>
+          ) : (
+            <></>
+          )}
           <Text
             style={style.text}
             onPress={() => DataItem.addReply(DataItem.index)}>

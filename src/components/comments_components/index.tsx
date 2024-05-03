@@ -1,4 +1,6 @@
 import {View, Text, FlatList, TextInput} from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 import React from 'react';
 import {style} from './style';
 import CommentContainer from '../comment_container';
@@ -192,6 +194,7 @@ const CommentsComponent = () => {
           onPress={() => (replyComment ? addComment(id) : addComment())}
         />
       </View>
+      <KeyboardSpacer />
     </View>
   );
 };
